@@ -31,4 +31,4 @@ def register(request):
 
 
 def page_not_found(request, exception):
-    return HttpResponseNotFound("<h1>Нюхай бебру</h1>")
+    return HttpResponseNotFound("<h1>Нюхай бебру!</h1>")
