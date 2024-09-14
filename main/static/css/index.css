@@ -1,0 +1,25 @@
+.div1 {
+    background-color: black;
+    color: green;
+}
+
+.main-header {
+    color: red;
+}
+
+.second-header {
+    background-color: brown;
+}
+
+.main-header.second-header {
+    font-family: "Inter";
+}
+
+.button {
+    color: aqua;
+}
+
+h1 {
+
+    color: forestgreen;
+}

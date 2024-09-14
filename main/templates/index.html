@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css">
+    <script src="{% static 'js/main.js' %}"></script>
+    <title>dewdkob</title>
+</head>
+
+<body>
+    <h1>123</h1>
+    <img src="{% static 'assets/dedkov.jpg' %}" onclick="alert(`я дедков`)" alt="My image">
+    <button class="button" onclick="buttonClick(event.target)">Click me</button>
+    <a href="ded" target="_blank">Ссылка на деда</a>
+    <form onsubmit="register(event)">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Логин" />
+        <input type="text" name="password" placeholder="Парлоль" />
+        <button>Зарегестирорвать</button>
+    </form>
+</body>
+
+</html>
