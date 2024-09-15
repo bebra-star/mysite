@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Main page{% endblock %}
+
+{% block content %}
+<ul>
+  {% for dict in dicts %}
+  <li>
+    <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
+  </li>
+  {% endfor %}
+</ul>
+<img src="{% static 'assets/dedkov.jpg' %}" onclick="alert(`я дедков`)" alt="My image" />
+<button class="button" onclick="buttonClick(event.target)">Click me</button>
+<form onsubmit="createDict(event)">
+  {% csrf_token %}
+  <input type="text" required name="name" placeholder="Название словаря" />
+  <input type="text" required name="lang1" />
+  <input type="text" required name="lang2" />
+  <button>Создать словарь</button>
+</form>
+<form onsubmit="register(event)">
+  {% csrf_token %}
+  <input type="text" required name="name" placeholder="Логин" />
+  <input type="text" name="password" required placeholder="Парлоль" />
+  <button>Зарегестирорвать</button>
+</form>
+{% endblock %}

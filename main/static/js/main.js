@@ -7,7 +7,7 @@ function register(e) {
   e.preventDefault();
   form = new FormData(e.target);
 
-  fetch("/register", {
+  fetch("api/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function createDict(e) {
   e.preventDefault();
   form = new FormData(e.target);
 
-  fetch("/dictinory", {
+  fetch("api/dictionary", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,13 +45,14 @@ function createDict(e) {
     },
     body: JSON.stringify({
       name: form.get("name"),
-      language1: form.get("password"),
+      language1: form.get("lang1"),
+      language2: form.get("lang2"),
     }),
   })
     .then((response) => {
       console.log(response);
       if (response.status == 201) {
-        alert("я зарегался");
+        window.location.reload();
       } else if (response.status == 409) {
         alert("пользователь с таким именем уже существует");
       } else {

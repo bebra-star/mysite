@@ -1,24 +1,31 @@
-.div1 {
-  background-color: black;
-  color: green;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.main-header {
-  color: red;
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  /* position: fixed; */
+  top: 0;
+  width: 100%;
 }
 
-.second-header {
-  background-color: brown;
+.menu__element {
+  float: left;
 }
 
-.main-header.second-header {
-  font-family: "Inter";
+.menu__element a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
-.button {
-  color: aqua;
-}
-
-.text {
-  color: yellow;
+.menu__element a:hover:not(.active) {
+  background-color: #111;
 }
