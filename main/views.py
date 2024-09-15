@@ -1,7 +1,9 @@
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
+from django.db import IntegrityError
+from django.http import HttpResponseNotFound, JsonResponse
 from django.shortcuts import render
-from pprint import pprint
 import json
+
+from main.models import User
 
 
 def main(request):
@@ -18,11 +20,35 @@ def register(request):
             data = json.loads(request.body.decode())
         except ValueError:
             return JsonResponse({"error": "json validtion error"})
-        if data.get("name") == "dedkov":
-            return JsonResponse(
-                {"error": "conflict name"},
-                status=409,
+
+        try:
+            User.objects.create(
+                username=data.get("name"), password=data.get("password")
             )
+        except IntegrityError as e:
+            return JsonResponse({"error": str(e)}, status=409)
+
+        return JsonResponse(
+            {"data": "success"},
+            status=201,
+        )
+    return JsonResponse({"error": "wrong method"}, status=405)
+
+
+def create_dict(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body.decode())
+        except ValueError:
+            return JsonResponse({"error": "json validtion error"})
+
+        try:
+            User.objects.create(
+                username=data.get("name"), password=data.get("password")
+            )
+        except IntegrityError as e:
+            return JsonResponse({"error": str(e)}, status=409)
+
         return JsonResponse(
             {"data": "success"},
             status=201,

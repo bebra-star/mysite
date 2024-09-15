@@ -1,25 +1,24 @@
 .div1 {
-    background-color: black;
-    color: green;
+  background-color: black;
+  color: green;
 }
 
 .main-header {
-    color: red;
+  color: red;
 }
 
 .second-header {
-    background-color: brown;
+  background-color: brown;
 }
 
 .main-header.second-header {
-    font-family: "Inter";
+  font-family: "Inter";
 }
 
 .button {
-    color: aqua;
+  color: aqua;
 }
 
-h1 {
-
-    color: forestgreen;
+.text {
+  color: yellow;
 }
