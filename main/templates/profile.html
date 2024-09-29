@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Мой профиль{% endblock %}
+
+{% block content %}
+
+{{ user.username }}
+<form onsubmit="logout(event)">
+    {% csrf_token %}
+    <button class="main-button">Выйти</button>
+</form>
+
+{% endblock %}

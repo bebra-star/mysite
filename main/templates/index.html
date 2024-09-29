@@ -21,10 +21,13 @@
 
 <body>
   <ul class="menu">
-    <li class="menu__element"><a>Home</a></li>
-    <li class="menu__element"><a>Profile</a></li>
+    <li class="menu__element"><a href="http://127.0.0.1:8000/">Главная</a></li>
+    <li class="menu__element"><a href="http://127.0.0.1:8000/mine">Мои словари</a></li>
+    <li class="menu__element"><a>Инструкция</a></li>
+    <li class="menu__element"><a href="http://127.0.0.1:8000/profile">{{ user.username|default:"Войти" }}</a></li>
   </ul>
   <!-- внутри дива будет блок content, который может определяться в дочерних шаблонах -->
   <div class="content">{% block content %}{% endblock %}</div>
 </body>
+
 </html>

@@ -3,6 +3,38 @@ function buttonClick(e) {
   console.log(e);
 }
 
+function login(e) {
+  e.preventDefault();
+  form = new FormData(e.target);
+
+  fetch("api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // передаем csrf-token в хедере
+      "X-CSRFToken": form.get("csrfmiddlewaretoken"),
+    },
+    // получаем json из объекта.
+    body: JSON.stringify({
+      name: form.get("name"),
+      password: form.get("password"),
+    }),
+  })
+    // then - вызывается после того, как запрос завершится успешно.
+    .then((response) => {
+      console.log(response);
+      if (response.status == 201) {
+        window.location.href = "http://127.0.0.1:8000/profile";
+      } else {
+        alert("ошибка");
+      }
+    })
+    // catch - вызывается в случае ошибки, например, если сервер не отвечает
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
 function register(e) {
   // так как в параметр e передается объект события, то его можно использовать для остановки дефолтного поведения тега (в данном случае form)
   e.preventDefault();
@@ -26,9 +58,38 @@ function register(e) {
     .then((response) => {
       console.log(response);
       if (response.status == 201) {
-        alert("я зарегался");
+        window.location.href = "http://127.0.0.1:8000/profile";
       } else if (response.status == 409) {
         alert("пользователь с таким именем уже существует");
+      } else {
+        alert("ошибка");
+      }
+    })
+    // catch - вызывается в случае ошибки, например, если сервер не отвечает
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+function logout(e) {
+  // так как в параметр e передается объект события, то его можно использовать для остановки дефолтного поведения тега (в данном случае form)
+  e.preventDefault();
+  // получаем объект формы
+  form = new FormData(e.target);
+
+  fetch("api/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // передаем csrf-token в хедере
+      "X-CSRFToken": form.get("csrfmiddlewaretoken"),
+    },
+  })
+    // then - вызывается после того, как запрос завершится успешно.
+    .then((response) => {
+      console.log(response);
+      if (response.status == 204) {
+        window.location.href = "http://127.0.0.1:8000/";
       } else {
         alert("ошибка");
       }

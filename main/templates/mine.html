@@ -1,23 +1,17 @@
-<!-- наследуемся от базового шаблона -->
 {% extends "index.html" %}
 {% load static %}
 
-<!-- определение блока title -->
-{% block title %}Главная{% endblock %}
+{% block title %}Моё{% endblock %}
 
-<!-- определение блока content -->
 {% block content %}
 <ul>
   <!-- цикл по массиву dicts из контекста -->
   {% for dict in dicts %}
   <li>
-    <a href="dict/{{ dict.id }}">{{ dict.name }} {{ dict.creator.username }}</a>
+    <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
   </li>
   {% endfor %}
 </ul>
-<img src="{% static 'assets/dedkov.jpg' %}" onclick="alert(`я дедков`)" alt="My image" />
-<button class="button" onclick="buttonClick(event.target)">Click me</button>
-<!-- при отправке форрмы вызывается функция createDict -->
 <form onsubmit="createDict(event)">
   <!-- django вставляет скрытый инпут с csrf_token в форму сам -->
   {% csrf_token %}

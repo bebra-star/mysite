@@ -2,10 +2,9 @@
 {% load static %}
 
 <!-- определение блока title -->
-{% block title %}Словарь {{ dict.name }}{% endblock %}
+{% block title %}Главная{% endblock %}
 
 <!-- определение блока content -->
 {% block content %}
-<h1>{{ dict.name }} </h1>
-<a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
+<h1>{{ requested_user.username }} </h1>
 {% endblock %}
