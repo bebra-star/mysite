@@ -6,7 +6,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 
 # Импорт моделей из models.py
-from main.models import Dictionary, User
+from main.models import Dictionary, User, Words
 
 
 def render_login(request):
@@ -60,13 +60,17 @@ def render_main(request):
     return render(request, "main.html", context=context)
 
 
-def mine(request):
+def render_create_dict(request):
+    return render(request, "create_dict.html")
+
+
+def render_my_dicts(request):
     # Словарь контекста, который передается в шаблон
     context = {
         # Dictionary.objects.all() - возвращает все объекты из таблицы Dictionary
         "dicts": Dictionary.objects.filter(creator_id=request.user.id)
     }
-    return render(request, "mine.html", context=context)
+    return render(request, "my_dicts.html", context=context)
 
 
 def handle_register(request):
@@ -117,11 +121,10 @@ def render_dictionary(request, id):
     dict = Dictionary.objects.filter(id=id).select_related("creator").first()
     if not dict:
         return render(request, "404.html")
-        # TODO: рендерить красивую страницу с ошибкой 404. Пример: http://www.sberbank.ru/ru/perso
-        # return render(request, "404.html")
+    words = Words.objects.filter(dictionary_id=id)
 
     # функция model_to_dict преобразует объект в словарь
-    context = {"dict": dict}
+    context = {"dict": dict, "words": words}
     return render(request, "dictionary.html", context=context)
 
 
@@ -129,7 +132,7 @@ def handle_create_dictionary(request):
     if request.method == "POST":
         data = json.loads(request.body.decode())
         try:
-            Dictionary.objects.create(
+            dict = Dictionary.objects.create(
                 name=data.get("name"),
                 language1=data.get("language1"),
                 language2=data.get("language2"),
@@ -137,6 +140,12 @@ def handle_create_dictionary(request):
             )
         except IntegrityError as e:
             return JsonResponse({"error": str(e)}, status=409)
+        for word_pair in data.get("words"):
+            Words.objects.create(
+                word1=word_pair.get("word1"),
+                word2=word_pair.get("word2"),
+                dictionary=dict,
+            )
 
         return JsonResponse(
             {"data": "success"},

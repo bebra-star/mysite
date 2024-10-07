@@ -18,3 +18,16 @@ class Dictionary(models.Model):
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
     language1 = models.CharField(max_length=30)
     language2 = models.CharField(max_length=30)
+
+
+class Words(models.Model):
+    id = models.AutoField(primary_key=True)
+    dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
+    word1 = models.CharField(max_length=30)
+    word2 = models.CharField(max_length=30)
+
+
+class TestSession(models.Model):
+    id = models.AutoField(primary_key=True)
+    dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

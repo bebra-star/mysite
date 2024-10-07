@@ -15,7 +15,7 @@
   </li>
   {% endfor %}
 </ul>
-<img src="{% static 'assets/dedkov.jpg' %}" onclick="alert(`я дедков`)" alt="My image" />
+<img src="{% static 'assets/dedkov.jpg' %}" onclick="event.target.remove()" alt="My image" />
 <button class="button" onclick="buttonClick(event.target)">Click me</button>
 <!-- при отправке форрмы вызывается функция createDict -->
 <form onsubmit="createDict(event)">
