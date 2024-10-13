@@ -1,12 +1,11 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
-from django.shortcuts import redirect, render
-from django.forms.models import model_to_dict
+from django.shortcuts import render
 import json
 from django.contrib.auth import authenticate, login, logout
 
 # Импорт моделей из models.py
-from main.models import Dictionary, User, Words
+from main.models import Dictionary, User, Words, Language
 
 
 def render_login(request):
@@ -20,7 +19,9 @@ def render_profile(request):
 
 
 def render_register(request):
-    return render(request, "registration.html")
+    context = {"langs": Language.objects.all()}
+
+    return render(request, "registration.html", context=context)
 
 
 def handle_login(request):
@@ -61,7 +62,8 @@ def render_main(request):
 
 
 def render_create_dict(request):
-    return render(request, "create_dict.html")
+    context = {"langs": Language.objects.all()}
+    return render(request, "create_dict.html", context=context)
 
 
 def render_my_dicts(request):
@@ -86,10 +88,14 @@ def handle_register(request):
         """
         try:
             user = User.objects.create_user(
-                username=data.get("name"), password=data.get("password")
+                username=data.get("name"),
+                password=data.get("password"),
+                first_language=Language.objects.get(id=data.get("first_language")),
+                second_language=Language.objects.get(id=data.get("second_language")),
             )
         except IntegrityError as e:
             # обрабатываем ошибку, если пользователь уже есть в базе. Возвращаем ошибку с кодом 409 - Conflict.
+            print(e)
             return JsonResponse({"error": str(e)}, status=409)
 
         login(request, user)
@@ -134,8 +140,8 @@ def handle_create_dictionary(request):
         try:
             dict = Dictionary.objects.create(
                 name=data.get("name"),
-                language1=data.get("language1"),
-                language2=data.get("language2"),
+                language1=Language.objects.get(id=data.get("language1")),
+                language2=Language.objects.get(id=data.get("language2")),
                 creator=request.user,
             )
         except IntegrityError as e:

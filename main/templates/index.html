@@ -12,6 +12,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Protest+Strike&family=Rubik+Bubbles&family=Rubik+Spray+Paint&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
   <!-- подключение стилей -->
   <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css" />
   <!-- подключение js -->
@@ -21,10 +24,11 @@
 
 <body>
   <ul class="menu">
+    <img class="menu__element logo" src="{% static 'assets/slovouch.png' %}" alt="dedkov" />
     <li class="menu__element"><a href="http://127.0.0.1:8000/">Главная</a></li>
     <li class="menu__element"><a href="http://127.0.0.1:8000/my-dicts">Мои словари</a></li>
     <li class="menu__element"><a>Инструкция</a></li>
-    <li class="menu__element"><a href="http://127.0.0.1:8000/profile">{{ user.username|default:"Войти" }}</a></li>
+    <li class="menu__element hi"><a href="http://127.0.0.1:8000/profile">{{ user.username|default:"Войти" }}</a></li>
   </ul>
   <!-- внутри дива будет блок content, который может определяться в дочерних шаблонах -->
   <div class="content">{% block content %}{% endblock %}</div>

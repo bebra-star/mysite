@@ -41,6 +41,7 @@ function register(e) {
   // получаем объект формы
   form = new FormData(e.target);
 
+
   fetch("api/register", {
     method: "POST",
     headers: {
@@ -52,6 +53,8 @@ function register(e) {
     body: JSON.stringify({
       name: form.get("name"),
       password: form.get("password"),
+      first_language: form.get("lang1"),
+      second_language: form.get("lang2")
     }),
   })
     // then - вызывается после того, как запрос завершится успешно.

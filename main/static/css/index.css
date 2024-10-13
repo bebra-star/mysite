@@ -3,32 +3,61 @@
   padding: 0;
 }
 
+
 .menu {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #b88f60;
+  background-color: #a54d4d;
   display: block;
   /* position: fixed; */
   top: 0;
   width: 100%;
+  height: 120px;
+}
+
+ul {
+  font-size: 35px;
 }
 
 .menu__element {
   float: left;
+  height: 120px;
 }
 
 .menu__element a {
   display: block;
-  color: white;
+  /* border: 1px solid #7a3636; */
+  /* background: rgba(138, 55, 55, 0.3); */
+  color: #ffffff;
   text-align: right;
-  padding: 20px 25px;
+  padding: 35px 25px;
   text-decoration: none;
+  font-size: 35px;
+  font-family: "Shantell Sans", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "BNCE" 0,
+    "INFM" 0,
+    "SPAC" 0;
 }
 
-.menu__element a:hover:not(.active) {
-  background-color: #b85c40;
+
+.menu__element a:hover {
+  background-color: #853d3d;
+  transform: translateY(-1px);
+  /* transition: box-shadow .5s, transform .5s; */
+  transition: .3s linear;
+}
+
+.hi {
+  float: right;
+}
+
+input {
+  font-size: 35px;
 }
 
 .main-button {
@@ -37,13 +66,13 @@
   background-color: #ffffff;
   border-radius: 4px;
   border-width: 0;
-  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-shadow: rgba(66, 35, 35, 0.4) 0 2px 4px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #e7d6d6 0 -3px 0 inset;
   box-sizing: border-box;
-  color: #36395A;
+  color: #5a3636;
   cursor: pointer;
   display: inline-flex;
-  font-family: "JetBrains Mono", monospace;
-  height: 48px;
+  font-family: "Shantell Sans", cursive;
+  height: 50px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -59,23 +88,32 @@
   touch-action: manipulation;
   white-space: nowrap;
   will-change: box-shadow, transform;
-  font-size: 18px;
+  font-size: 30px;
 }
 
 .main-button:focus {
-  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-shadow: #e7d6d6 0 0 0 1.5px inset, rgba(66, 35, 35, 0.4) 0 2px 4px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #e7d6d6 0 -3px 0 inset;
 }
 
 .main-button:hover {
-  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
-  transform: translateY(-2px);
+  box-shadow: rgba(66, 35, 35, 0.4) 0 4px 8px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #e7d6d6 0 -3px 0 inset;
+  transform: translateY(-1px);
 }
 
 .main-button:active {
-  box-shadow: #D6D6E7 0 3px 7px inset;
-  transform: translateY(2px);
+  box-shadow: #e7d6d6 0 3px 7px inset;
+  transform: translateY(1px);
 }
 
-.add-words-input__button{
+.add-words-input__button {
   width: 100px;
+}
+
+.logo {
+  padding: 25px 30px;
+  /* object-fit: fill; */
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 70px;
+  /* max-height: inherit; */
 }
