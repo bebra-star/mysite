@@ -57,7 +57,9 @@ ul {
 }
 
 input {
-  font-size: 35px;
+  font-size: 30px;
+  max-width: 400px;
+  font-family: "Shantell Sans", cursive;
 }
 
 .main-button {
@@ -107,6 +109,7 @@ input {
 
 .add-words-input__button {
   width: 100px;
+  font-family: "Shantell Sans", cursive;
 }
 
 .logo {
@@ -116,4 +119,82 @@ input {
   padding-right: 16px;
   height: 70px;
   /* max-height: inherit; */
+}
+
+label {
+  min-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Shantell Sans", cursive;
+  font-size: 50px;
+}
+
+.select {
+  position: relative;
+  width: 500px;
+}
+
+.select svg {
+  position: absolute;
+  right: 12px;
+  top: calc(50% - 3px);
+  width: 10px;
+  height: 6px;
+  stroke-width: 2px;
+  stroke: #9098a9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.select select {
+  -webkit-appearance: none;
+  padding: 7px 40px 7px 12px;
+  width: 100%;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 1px 3px -2px #9098a9;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 150ms ease;
+}
+
+.select select:required:invalid {
+  color: #5a667f;
+}
+
+.select select option {
+  color: #542222;
+}
+
+.select select option[value=""][disabled] {
+  display: none;
+}
+
+.select select:focus {
+  outline: none;
+  border-color: rgb(160, 56, 56);
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+}
+
+.select select:hover+svg {
+  stroke: rgb(255, 0, 0);
+}
+
+.sprites {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.current-card__text {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

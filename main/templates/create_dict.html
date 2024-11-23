@@ -9,16 +9,18 @@
   <!-- django вставляет скрытый инпут с csrf_token в форму сам -->
   {% csrf_token %}
   <input type="text" required name="name" placeholder="Название словаря" />
-  <select name="lang1">
-    {% for lang in langs %}
-    <option value="{{ lang.id }}">{{ lang.name }}</option>
-    {% endfor %}
-  </select>
-  <select name="lang2">
-    {% for lang in langs %}
-    <option value="{{ lang.id }}">{{ lang.name }}</option>
-    {% endfor %}
-  </select>
+  <label class="select" for="slct">
+    <select name="lang1">
+      {% for lang in langs %}
+      <option value="{{ lang.id }}">{{ lang.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="lang2">
+      {% for lang in langs %}
+      <option value="{{ lang.id }}">{{ lang.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
   <div class="words_input_container">
     <div class="words_input_container__word">
       <input type="text" required name="word1" />

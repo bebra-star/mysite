@@ -8,16 +8,20 @@
     {% csrf_token %}
     <input type="text" required name="name" placeholder="Логин" />
     <input type="text" name="password" required placeholder="Пароль" />
-    <select name="lang1">
-        {% for lang in langs %}
-        <option value="{{ lang.id }}">{{ lang.name }}</option>
-        {% endfor %}
-    </select>
-    <select name="lang2">
-        {% for lang in langs %}
-        <option value="{{ lang.id }}">{{ lang.name }}</option>
-        {% endfor %}
-    </select>
+    <label class="select" for="slct">
+        <select name="lang1">
+            <option value="" disabled="disabled" selected="selected">Выберите язык</option>
+            {% for lang in langs %}
+            <option value="{{ lang.id }}">{{ lang.name }}</option>
+            {% endfor %}
+        </select id="slct" required="required">
+        <select name="lang2">
+            <option value="" disabled="disabled" selected="selected">Выберите язык</option>
+            {% for lang in langs %}
+            <option value="{{ lang.id }}">{{ lang.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
     <button class="main-button">Зарегистировать</button>
     <a href="http://127.0.0.1:8000/login">Войти</a>
 </form>

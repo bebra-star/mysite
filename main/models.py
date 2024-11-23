@@ -36,7 +36,7 @@ class Dictionary(models.Model):
     )
 
 
-class Words(models.Model):
+class WordPair(models.Model):
     id = models.AutoField(primary_key=True)
     dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     word1 = models.CharField(max_length=30)
@@ -51,7 +51,7 @@ class TestSession(models.Model):
     showing_language = models.ForeignKey(Language, on_delete=models.CASCADE)
 
 
-class TestSessionWords(models.Model):
+class TestSessionWordPair(models.Model):
     id = models.AutoField(primary_key=True)
     test_session = models.ForeignKey(TestSession, on_delete=models.CASCADE)
-    word = models.ForeignKey(Words, on_delete=models.CASCADE)
+    word_pair = models.ForeignKey(WordPair, on_delete=models.CASCADE)

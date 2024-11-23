@@ -18,13 +18,5 @@
 <img src="{% static 'assets/dedkov.jpg' %}" onclick="event.target.remove()" alt="My image" />
 <button class="button" onclick="buttonClick(event.target)">Click me</button>
 <!-- при отправке форрмы вызывается функция createDict -->
-<form onsubmit="createDict(event)">
-  <!-- django вставляет скрытый инпут с csrf_token в форму сам -->
-  {% csrf_token %}
-  <input type="text" required name="name" placeholder="Название словаря" />
-  <input type="text" required name="lang1" />
-  <input type="text" required name="lang2" />
-  <!-- нажатие едиственной кнопки в теге form вызывает ивент onsubmit -->
-  <button class="main-button">Создать словарь</button>
 </form>
 {% endblock %}

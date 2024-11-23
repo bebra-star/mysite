@@ -1,6 +1,5 @@
 function buttonClick(e) {
   e.style.color = "blue";
-  console.log(e);
 }
 
 function login(e) {
@@ -22,7 +21,6 @@ function login(e) {
   })
     // then - вызывается после того, как запрос завершится успешно.
     .then((response) => {
-      console.log(response);
       if (response.status == 201) {
         window.location.href = "http://127.0.0.1:8000/profile";
       } else {
@@ -59,7 +57,6 @@ function register(e) {
   })
     // then - вызывается после того, как запрос завершится успешно.
     .then((response) => {
-      console.log(response);
       if (response.status == 201) {
         window.location.href = "http://127.0.0.1:8000/profile";
       } else if (response.status == 409) {
@@ -90,7 +87,6 @@ function logout(e) {
   })
     // then - вызывается после того, как запрос завершится успешно.
     .then((response) => {
-      console.log(response);
       if (response.status == 204) {
         window.location.href = "http://127.0.0.1:8000/";
       } else {
@@ -130,7 +126,6 @@ function createDict(e) {
     }),
   })
     .then((response) => {
-      console.log(response);
       if (response.status == 201) {
         // window.location.reload();
       } else if (response.status == 409) {
@@ -175,7 +170,6 @@ function start_test(e, dict_id) {
     }),
   })
     .then((response) => {
-      console.log(response);
       if (response.status == 201) {
         // window.location.href = "http://127.0.0.1:8000/profile";
         alert("123");
