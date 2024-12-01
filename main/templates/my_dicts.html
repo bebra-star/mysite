@@ -6,11 +6,14 @@
 {% block content %}
 {% if user.is_authenticated %}
 {% if dicts %}
-<ul>
+<ul class="dicts dict-main">
   <!-- цикл по массиву dicts из контекста -->
   {% for dict in dicts %}
   <li>
-    <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
+    <p>
+      <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
+    </p>
+    <a href="dict/{{ dict.id }}"> <img src="../static/assets/{{ dict.id }}.jpg" /> </a>
   </li>
   {% endfor %}
 </ul>

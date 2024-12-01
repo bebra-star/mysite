@@ -1,8 +1,61 @@
 * {
   margin: 0;
   padding: 0;
+  list-style-type: none;
+  /* border: 2px solid blue; */
+  font-family: "Shantell Sans", cursive;
 }
 
+html {
+  box-sizing: border-box;
+  background-color: rgb(223, 204, 201);
+}
+
+.dicts li p a {
+  font-size: 31px;
+  padding: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: rgb(66, 55, 55);
+  text-decoration: none;
+}
+
+.my-dicts {
+  /* word-wrap: break-word; */
+  width: 100%;
+  text-align: center;
+  border: 2px solid rgb(182, 162, 159);
+  border-radius: 10px;
+  color: rgb(66, 55, 55);
+  background-color: rgb(255, 243, 241);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  top: 120px;
+  margin-right: 20px;
+  background: rgb(255, 243, 241);
+}
+
+.dict-main {
+  word-wrap: break-word;
+  width: 175px;
+  text-align: center;
+  border: 2px solid rgb(182, 162, 159);
+  border-radius: 10px;
+  color: rgb(66, 55, 55);
+  background-color: rgb(255, 243, 241);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  top: 120px;
+  display: block;
+  float: left;
+  margin-right: 20px;
+  background: rgb(255, 243, 241);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
 .menu {
   list-style-type: none;
@@ -21,17 +74,84 @@ ul {
   font-size: 35px;
 }
 
+.dedkov {
+  left: 340px;
+  right: 340px;
+  display: block;
+}
+
 .menu__element {
+  background-color: #a54d4d;
   float: left;
   height: 120px;
+
+}
+
+.panel {
+  background-image: url(../assets/panel.jpg);
+  width: 100%;
+  height: 101px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.div {
+  float: left;
+  position: fixed;
+  z-index: 0;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.right {
+  top: 120px;
+  right: 0;
+  bottom: 0;
+  left: 83%;
+}
+
+.left {
+  top: 120px;
+  left: 0;
+  bottom: 0;
+  right: 88%;
+}
+
+.middle {
+  padding: 10px;
+  top: 120px;
+  right: 18%;
+  bottom: 0;
+  left: 18%;
+  width: 64%;
+}
+
+.devochki {
+  background-color: #d39696;
+  width: 18%;
+}
+
+.sonya {
+  float: left;
+  width: 100%;
+
+}
+
+.dasha {
+  float: right;
+  width: 100%;
 }
 
 .menu__element a {
+  height: 120px;
   display: block;
-  /* border: 1px solid #7a3636; */
-  /* background: rgba(138, 55, 55, 0.3); */
   color: #ffffff;
-  text-align: right;
+  text-align: center;
   padding: 35px 25px;
   text-decoration: none;
   font-size: 35px;
@@ -57,12 +177,17 @@ ul {
 }
 
 input {
+  border: 2px solid rgb(182, 162, 159);
+  border-radius: 10px;
+  color: rgb(66, 55, 55);
+  background-color: rgb(255, 243, 241);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-size: 30px;
   max-width: 400px;
   font-family: "Shantell Sans", cursive;
 }
 
-.main-button {
+button {
   align-items: center;
   appearance: none;
   background-color: #ffffff;
@@ -93,18 +218,22 @@ input {
   font-size: 30px;
 }
 
-.main-button:focus {
+button:focus {
   box-shadow: #e7d6d6 0 0 0 1.5px inset, rgba(66, 35, 35, 0.4) 0 2px 4px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #e7d6d6 0 -3px 0 inset;
 }
 
-.main-button:hover {
+button:hover {
   box-shadow: rgba(66, 35, 35, 0.4) 0 4px 8px, rgba(66, 35, 35, 0.3) 0 7px 13px -3px, #e7d6d6 0 -3px 0 inset;
   transform: translateY(-1px);
 }
 
-.main-button:active {
+button:active {
   box-shadow: #e7d6d6 0 3px 7px inset;
   transform: translateY(1px);
+}
+
+.button-dict {
+  font-size: 20px;
 }
 
 .add-words-input__button {
@@ -113,15 +242,13 @@ input {
 }
 
 .logo {
-  padding: 25px 30px;
-  /* object-fit: fill; */
-  padding-left: 16px;
-  padding-right: 16px;
-  height: 70px;
-  /* max-height: inherit; */
+  padding: 20px 16px 20px 16px;
+  /* padding-left: 16px;
+  padding-right: 16px; */
 }
 
 label {
+
   min-height: 20px;
   display: flex;
   justify-content: center;
@@ -131,6 +258,7 @@ label {
 }
 
 .select {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   width: 500px;
 }
@@ -142,7 +270,7 @@ label {
   width: 10px;
   height: 6px;
   stroke-width: 2px;
-  stroke: #9098a9;
+  stroke: #342753;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -153,10 +281,10 @@ label {
   -webkit-appearance: none;
   padding: 7px 40px 7px 12px;
   width: 100%;
-  border: 1px solid #e8eaed;
+  border: 1px solid #b1acac;
   border-radius: 5px;
-  background: #fff;
-  box-shadow: 0 1px 3px -2px #9098a9;
+  background: rgb(255, 248, 247);
+  box-shadow: 0 1px 3px -2px #a99090;
   cursor: pointer;
   font-family: inherit;
   font-size: 16px;
@@ -164,11 +292,11 @@ label {
 }
 
 .select select:required:invalid {
-  color: #5a667f;
+  color: #7f5a5a;
 }
 
 .select select option {
-  color: #542222;
+  color: #473c3c;
 }
 
 .select select option[value=""][disabled] {

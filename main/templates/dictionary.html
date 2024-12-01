@@ -7,29 +7,31 @@
 <!-- определение блока content -->
 {% block content %}
 <script src="{% static 'js/dictionary.js' %}"></script>
-<h1>{{ dict.name }} </h1>
-<p>Автор:</p>
-<script>
-    fetchDictionary("{{dict.id}}")
-</script>
-<a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
-<form onsubmit="start_test(event, '{{ dict.id }}')">
-    {% csrf_token %}
-    <button>Начать прохождение</button>
-</form>
-<span>Изменить язык</span>
-<input type="checkbox" onclick="handleLanguageSwitch()">
-<div class="card">
-    <div class="current-card__text" onclick="flipCard()"></div>
-    <button onclick="handleNextWord()">Вперед</button>
-    <button onclick="handlePreviousWord()">Назад</button>
+<div class="my-dicts">
+    <h1>{{ dict.name }} </h1>
+    <p>Автор:</p>
+    <script>
+        fetchDictionary("{{dict.id}}")
+    </script>
+    <a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
+    <form onsubmit="start_test(event, '{{ dict.id }}')">
+        {% csrf_token %}
+        <button class="button-dict">Начать прохождение</button>
+    </form>
+    <span>Изменить язык</span>
+    <input type="checkbox" onclick="handleLanguageSwitch()">
+    <div class="card">
+        <div class="current-card__text" onclick="flipCard()"></div>
+        <button class="button-dict" onclick="handleNextWord()">Вперед</button>
+        <button class="button-dict" onclick="handlePreviousWord()">Назад</button>
+    </div>
+    <ul>
+        <!-- цикл по массиву dicts из контекста -->
+        {% for word in words %}
+        <li>
+            {{ word.word1 }} - {{word.word2}}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
-<ul>
-    <!-- цикл по массиву dicts из контекста -->
-    {% for word in words %}
-    <li>
-        {{ word.word1 }} - {{word.word2}}
-    </li>
-    {% endfor %}
-</ul>
 {% endblock %}

@@ -6,7 +6,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- подключение шрифтов -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -15,14 +14,13 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Protest+Strike&family=Rubik+Bubbles&family=Rubik+Spray+Paint&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap"
     rel="stylesheet">
-  <!-- подключение стилей -->
   <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css" />
-  <!-- подключение js -->
   <script src="{% static 'js/main.js' %}"></script>
   <title>{% block title %} Mysite {% endblock %}</title>
 </head>
 
 <body>
+  <!-- {% block content1 %} -->
   <ul class="menu">
     <img class="menu__element logo" src="{% static 'assets/slovouch_purple.png' %}" alt="dedkov" />
     <li class="menu__element"><a href="http://127.0.0.1:8000/">Главная</a></li>
@@ -31,7 +29,12 @@
     <li class="menu__element hi"><a href="http://127.0.0.1:8000/profile">{{ user.username|default:"Войти" }}</a></li>
   </ul>
   <!-- внутри дива будет блок content, который может определяться в дочерних шаблонах -->
-  <div class="content">{% block content %}{% endblock %}</div>
+  <div class="div devochki left"><img src="{% static 'assets/sonya.png' %}" class="sonya"></div>
+  <div class="div middle">{% block content %}{% endblock %}</div>
+  <div class="div devochki right"><img src="{% static 'assets/dasha.png' %}" class="dasha"></div>
+  <div class="panel"></div>
+  <!-- {% endblock %} -->
+
 </body>
 
 </html>
