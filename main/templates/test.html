@@ -10,7 +10,7 @@
 <h1>{{ dict.name }}</h1>
 <p class="showing-word__text"></p>
 <div class="word-test">
-    <form onsubmit="answer(event);">
+    <form onsubmit="answerSubmit(event)">
         {% csrf_token %}
         <input
             class="translation__input"

@@ -5,7 +5,12 @@ from django.forms.models import model_to_dict
 from django.contrib.auth import authenticate, login, logout
 
 # Импорт моделей из models.py
-from main.helper import get_current_word_pair, get_next_word
+from main.helper import (
+    get_current_word_pair,
+    get_next_word,
+    apply_language_to_word_pair,
+    get_showing_word,
+)
 from main.models import (
     Dictionary,
     User,
@@ -13,6 +18,7 @@ from main.models import (
     Language,
     TestSession,
     TestSessionWordPair,
+    TestSessionWordPairStatus,
 )
 
 
@@ -57,7 +63,11 @@ def handle_start_test(request):
 def handle_get_test_word(request, test_session):
     if request.method == "GET":
         return JsonResponse(
-            {"data": get_current_word_pair(test_session)},
+            {
+                "data": get_showing_word(
+                    test_session, get_current_word_pair(test_session)
+                )
+            },
             status=200,
         )
 
@@ -66,16 +76,27 @@ def handle_answer_test_word(request, test_session: TestSession):
     if request.method == "POST":
         data = json.loads(request.body.decode())
 
-        if data.get("answer") == get_current_word_pair(test_session).get("translation"):
+        current_word_pair = TestSessionWordPair.objects.filter(
+            test_session_id=test_session.id
+        )[test_session.current_word_index]
+
+        if data.get("answer") == apply_language_to_word_pair(
+            test_session, current_word_pair
+        ).get("translation"):
             success = True
+            current_word_pair.status = TestSessionWordPairStatus.LEARNED
         else:
             success = False
+            current_word_pair.status = TestSessionWordPairStatus.NOT_LEARNED
+        current_word_pair.save()
 
         return JsonResponse(
             {
                 "data": {
                     "success": success,
-                    "next_word": get_next_word(test_session),
+                    "next_word": get_showing_word(
+                        test_session, get_next_word(test_session)
+                    ),
                 }
             },
             status=200,
@@ -84,10 +105,16 @@ def handle_answer_test_word(request, test_session: TestSession):
 
 def handle_skip_test_word(request, test_session: TestSession):
     if request.method == "GET":
+        current_word_pair = get_current_word_pair(test_session)
+        current_word_pair.status = TestSessionWordPairStatus.SKIPPED
+        current_word_pair.save()
+
         return JsonResponse(
             {
                 "data": {
-                    "next_word": get_next_word(test_session),
+                    "next_word": get_showing_word(
+                        test_session, get_next_word(test_session)
+                    ),
                 }
             },
             status=200,

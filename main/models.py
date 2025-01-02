@@ -51,7 +51,16 @@ class TestSession(models.Model):
     is_showing_language_first = models.BooleanField()
 
 
+class TestSessionWordPairStatus(models.IntegerChoices):
+    SKIPPED = 0
+    NOT_LEARNED = 1
+    LEARNED = 2
+
+
 class TestSessionWordPair(models.Model):
     id = models.AutoField(primary_key=True)
     test_session = models.ForeignKey(TestSession, on_delete=models.CASCADE)
     word_pair = models.ForeignKey(WordPair, on_delete=models.CASCADE)
+    status = models.IntegerField(
+        default=None, choices=TestSessionWordPairStatus.choices, blank=True, null=True
+    )

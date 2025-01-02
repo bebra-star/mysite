@@ -1,5 +1,4 @@
 let showingWord;
-let tranlation;
 let dictId;
 
 function setGlobalDictId(value) {
@@ -10,8 +9,7 @@ function getTestWord() {
     fetch(`${window.location.origin}/api/dictionary/${dictId}/test/word`)
         .then((res) => {
             res.json().then((data) => {
-                showingWord = data.data.showing_word;
-                tranlation = data.data.translation;
+                showingWord = data.data;
                 displayShowingWord();
             });
         })
@@ -31,25 +29,29 @@ function getTranslationInput() {
         .toLowerCase();
 }
 
-function sendAnswer(csrftoken, answer) {
+function sendAnswer(csrftoken, answer) {}
+
+function answerSubmit(e) {
+    e.preventDefault();
+    form = new FormData(e.target);
+
     fetch(
         `${window.location.origin}/api/dictionary/${dictId}/test/answer-word`,
         {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
+                "X-CSRFToken": form.get("csrfmiddlewaretoken"),
             },
             body: JSON.stringify({
-                answer: answer,
+                answer: form.get("answer"),
             }),
         }
     )
         .then((res) => {
             res.json().then((data) => {
                 console.log(data);
-                showingWord = data.data.showing_word;
-                tranlation = data.data.translation;
+                showingWord = data.data.next_word;
                 displayShowingWord();
             });
         })
@@ -58,11 +60,18 @@ function sendAnswer(csrftoken, answer) {
         });
 }
 
-function answer(e) {
-    e.preventDefault();
-    form = new FormData(e.target);
-
-    sendAnswer(form.get("csrfmiddlewaretoken"), form.get("answer"));
+function skipWordClicked() {
+    fetch(`${window.location.origin}/api/dictionary/${dictId}/test/skip-word`, {
+        method: "GET",
+    })
+        .then((res) => {
+            res.json().then((data) => {
+                console.log(data);
+                showingWord = data.data.next_word;
+                displayShowingWord();
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+        });
 }
-
-function skipWordClicked() {}
