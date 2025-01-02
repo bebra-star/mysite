@@ -47,7 +47,7 @@ html {
   top: 120px;
   display: block;
   float: left;
-  margin-right: 20px;
+  margin-right: 10px;
   background: rgb(255, 243, 241);
 }
 
@@ -72,12 +72,6 @@ html {
 
 ul {
   font-size: 35px;
-}
-
-.dedkov {
-  left: 340px;
-  right: 340px;
-  display: block;
 }
 
 .menu__element {
@@ -112,19 +106,20 @@ ul {
   top: 120px;
   right: 0;
   bottom: 0;
-  left: 83%;
+  left: 82%;
 }
 
 .left {
   top: 120px;
   left: 0;
   bottom: 0;
-  right: 88%;
+  right: 83%;
 }
 
 .middle {
   padding: 10px;
   top: 120px;
+  z-index: 9999;
   right: 18%;
   bottom: 0;
   left: 18%;
@@ -155,7 +150,6 @@ ul {
   padding: 35px 25px;
   text-decoration: none;
   font-size: 35px;
-  font-family: "Shantell Sans", cursive;
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings:
@@ -184,7 +178,6 @@ input {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-size: 30px;
   max-width: 400px;
-  font-family: "Shantell Sans", cursive;
 }
 
 button {
@@ -198,11 +191,9 @@ button {
   color: #5a3636;
   cursor: pointer;
   display: inline-flex;
-  font-family: "Shantell Sans", cursive;
   height: 50px;
   justify-content: center;
   line-height: 1;
-  list-style: none;
   overflow: hidden;
   padding-left: 16px;
   padding-right: 16px;
@@ -210,10 +201,6 @@ button {
   text-align: right;
   text-decoration: none;
   transition: box-shadow .15s, transform .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
   will-change: box-shadow, transform;
   font-size: 30px;
 }
@@ -238,7 +225,6 @@ button:active {
 
 .add-words-input__button {
   width: 100px;
-  font-family: "Shantell Sans", cursive;
 }
 
 .logo {
@@ -248,12 +234,10 @@ button:active {
 }
 
 label {
-
   min-height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Shantell Sans", cursive;
   font-size: 50px;
 }
 
@@ -325,4 +309,26 @@ label {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+
+.dialog {
+  width: calc(100% - 40px);
+  max-width: 400px;
+  border: none;
+  border-radius: 6px;
+  inset: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.6);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.showing-word__text{
+  font-size: 3rem;
 }

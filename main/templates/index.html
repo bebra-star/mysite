@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <!-- {% block content1 %} -->
+  {% block content1 %}
   <ul class="menu">
     <img class="menu__element logo" src="{% static 'assets/slovouch_purple.png' %}" alt="dedkov" />
     <li class="menu__element"><a href="http://127.0.0.1:8000/">Главная</a></li>
@@ -33,7 +33,7 @@
   <div class="div middle">{% block content %}{% endblock %}</div>
   <div class="div devochki right"><img src="{% static 'assets/dasha.png' %}" class="dasha"></div>
   <div class="panel"></div>
-  <!-- {% endblock %} -->
+  {% endblock %}
 
 </body>
 

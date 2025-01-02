@@ -1,12 +1,11 @@
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse
 import json
 from django.forms.models import model_to_dict
 from django.contrib.auth import authenticate, login, logout
-from django.core import serializers
 
 # Импорт моделей из models.py
+from main.helper import get_current_word_pair, get_next_word
 from main.models import (
     Dictionary,
     User,
@@ -17,42 +16,82 @@ from main.models import (
 )
 
 
-def render_login(request):
-    return render(request, "login.html")
-
-
-def render_profile(request):
-    if request.user.is_authenticated:
-        return render(request, "profile.html")
-    return render_login(request)
-
-
-def render_register(request):
-    context = {"langs": Language.objects.all()}
-
-    return render(request, "registration.html", context=context)
-
-
 def handle_start_test(request):
     if request.method == "POST":
-        data = json.loads(request.body.decode())
-
-        user = authenticate(
-            request, username=data.get("name"), password=data.get("password")
-        )
-        if user is None:
+        if not request.user.is_authenticated:
             return JsonResponse(
-                {"data": "success"},
+                {"error": "Unauthorized"},
+                status=403,
+            )
+        data = json.loads(request.body.decode())
+        dict = Dictionary.objects.filter(id=data.get("dict_id")).first()
+        if not dict:
+            return JsonResponse(
+                {"error": "dict not found"},
                 status=400,
             )
-        login(request, user)
+
+        TestSession.objects.filter(
+            user_id=request.user.id, dictionary_id=dict.id
+        ).delete()
+
+        test_session = TestSession.objects.create(
+            dictionary=dict,
+            user=request.user,
+            current_word_index=0,
+            is_showing_language_first=data.get("is_showing_language_first"),
+        )
+
+        for word_pair in WordPair.objects.filter(dictionary_id=dict.id):
+            TestSessionWordPair.objects.create(
+                test_session=test_session, word_pair=word_pair
+            )
 
         return JsonResponse(
             {"data": "success"},
-            status=201,
+            status=200,
+        )
+    return JsonResponse({"error": "wrong method"}, status=405)
+
+
+def handle_get_test_word(request, test_session):
+    if request.method == "GET":
+        return JsonResponse(
+            {"data": get_current_word_pair(test_session)},
+            status=200,
         )
 
-    return JsonResponse({"error": "wrong method"}, status=405)
+
+def handle_answer_test_word(request, test_session: TestSession):
+    if request.method == "POST":
+        data = json.loads(request.body.decode())
+
+        if data.get("answer") == get_current_word_pair(test_session).get("translation"):
+            success = True
+        else:
+            success = False
+
+        return JsonResponse(
+            {
+                "data": {
+                    "success": success,
+                    "next_word": get_next_word(test_session),
+                }
+            },
+            status=200,
+        )
+
+
+def handle_skip_test_word(request, test_session: TestSession):
+    if request.method == "GET":
+        return JsonResponse(
+            {
+                "data": {
+                    "next_word": get_next_word(test_session),
+                }
+            },
+            status=200,
+        )
 
 
 def handle_login(request):
@@ -80,30 +119,6 @@ def handle_login(request):
 def handle_logout(request):
     logout(request)
     return JsonResponse({}, status=204)
-
-
-def render_main(request):
-    # Словарь контекста, который передается в шаблон
-    context = {
-        # Dictionary.objects.all() - возвращает все объекты из таблицы Dictionary
-        "dicts": Dictionary.objects.all().select_related("creator"),
-    }
-
-    return render(request, "main.html", context=context)
-
-
-def render_create_dict(request):
-    context = {"langs": Language.objects.all()}
-    return render(request, "create_dict.html", context=context)
-
-
-def render_my_dicts(request):
-    # Словарь контекста, который передается в шаблон
-    context = {
-        # Dictionary.objects.all() - возвращает все объекты из таблицы Dictionary
-        "dicts": Dictionary.objects.filter(creator_id=request.user.id)
-    }
-    return render(request, "my_dicts.html", context=context)
 
 
 def handle_register(request):
@@ -140,40 +155,6 @@ def handle_register(request):
     return JsonResponse({"error": "wrong method"}, status=405)
 
 
-def render_user(request, user_id):
-    # получаем объект Dictionary по id из базы данных, возвращаем 404 если не найдено.
-    user = User.objects.filter(id=user_id).first()
-    if not user:
-        # TODO: рендерить красивую страницу с ошибкой 404. Пример: http://www.sberbank.ru/ru/perso
-        return render(request, "404.html")
-
-    # функция model_to_dict преобразует объект в словарь
-    context = {"requested_user": user}
-    return render(request, "user.html", context=context)
-
-
-# параметр id - переменная, которая передается в функцию render_dictionary из обработчика урлов.
-def render_dictionary(request, dict_id):
-    # получаем объект Dictionary по id из базы данных, возвращаем 404 если не найдено.
-    dict = Dictionary.objects.filter(id=dict_id).select_related("creator").first()
-    if not dict:
-        return render(request, "404.html")
-    words = WordPair.objects.filter(dictionary_id=dict_id)
-    test_session = TestSession.objects.filter(
-        user_id=request.user.id, dictionary_id=dict_id
-    ).first()
-
-    if not test_session:
-        TestSession.objects.create
-    # функция model_to_dict преобразует объект в словарь
-    context = {"dict": dict, "words": words}
-    return render(request, "dictionary.html", context=context)
-
-
-def render_testing(request):
-    return render(request, "testing.html")
-
-
 def handle_create_dictionary(request):
     if request.method == "POST":
         data = json.loads(request.body.decode())
@@ -201,18 +182,9 @@ def handle_create_dictionary(request):
     return JsonResponse({"error": "wrong method"}, status=405)
 
 
-def handle_get_dictionary(request, dict_id):
+def handle_get_dictionary(request, dict):
     if request.method == "GET":
-        dict = (
-            Dictionary.objects.filter(id=dict_id)
-            .select_related("language1", "language2")
-            .first()
-        )
-        if not dict:
-            return JsonResponse(
-                status=404,
-            )
-        dict.words = WordPair.objects.filter(dictionary_id=dict_id)
+        dict.words = WordPair.objects.filter(dictionary_id=dict.id)
 
         return JsonResponse(
             {
@@ -227,7 +199,3 @@ def handle_get_dictionary(request, dict_id):
         )
 
     return JsonResponse({"error": "wrong method"}, status=405)
-
-
-def page_not_found(request, exception):
-    return HttpResponseNotFound("<h1>Нюхай бебру!</h1>")

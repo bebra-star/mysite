@@ -25,11 +25,10 @@
     <div class="words_input_container__word">
       <input type="text" required name="word1" />
       <input type="text" required name="word2" />
-      <input type="button" class="delete-words-input__button" onclick="delete_words_input(event.target.parentNode)"
-        value="X" />
+      <button class="delete-words-input__button" onclick="delete_words_input(event.target.parentNode)">X</button>
     </div>
   </div>
-  <input type="button" class="add-words-input__button" onclick="add_words_input()" value="+" />
+  <button class="add-words-input__button" onclick="addWordsInput()">+</button>
   <button class="main-button">Создать словарь</button>
 </form>
 {% else %}

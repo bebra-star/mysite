@@ -7,19 +7,31 @@
 <!-- определение блока content -->
 {% block content %}
 <script src="{% static 'js/dictionary.js' %}"></script>
-<div class="my-dicts">
-    <h1>{{ dict.name }} </h1>
-    <p>Автор:</p>
-    <script>
-        fetchDictionary("{{dict.id}}")
-    </script>
-    <a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
-    <form onsubmit="start_test(event, '{{ dict.id }}')">
+<dialog class="dialog">
+    <form onsubmit="startTest(event, '{{ dict.id }}')">
         {% csrf_token %}
-        <button class="button-dict">Начать прохождение</button>
+        <div class="language__switch">
+            <span>Изменить язык</span>
+            <input type="checkbox" name="is_showing_language_first">
+        </div>
+        <button>Начать прохождение</button>
     </form>
-    <span>Изменить язык</span>
-    <input type="checkbox" onclick="handleLanguageSwitch()">
+</dialog>
+<div class="my-dicts">
+    <h1>{{ dict.name }}</h1>
+    <p>Автор:</p>
+    <a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
+    <!-- <form onsubmit="start_test(event, '{{ dict.id }}')"> -->
+    {% if test_session_exists %}
+    <button onclick="window.location.href+=`/test`">Продолжить</button>
+    <button onclick="openPopup();">Начать новый тест</button>
+    {% else %}
+    <button onclick="openPopup();">Начать тест</button>
+    {% endif %}
+    <div class="language__switch">
+        <span>Изменить язык</span>
+        <input type="checkbox" onclick="handleLanguageSwitch()">
+    </div>
     <div class="card">
         <div class="current-card__text" onclick="flipCard()"></div>
         <button class="button-dict" onclick="handleNextWord()">Вперед</button>
@@ -34,4 +46,7 @@
         {% endfor %}
     </ul>
 </div>
+<script>
+    fetchDictionary()
+</script>
 {% endblock %}

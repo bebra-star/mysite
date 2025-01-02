@@ -139,7 +139,7 @@ function createDict(e) {
     });
 }
 
-function add_words_input() {
+function addWordsInput() {
   const container = document.getElementsByClassName("words_input_container").item(0);
   const clone = container.lastElementChild.cloneNode(true);
   clone.childNodes.forEach((child) => {
@@ -155,29 +155,3 @@ function delete_words_input(e) {
   e.remove();
 }
 
-function start_test(e, dict_id) {
-  e.preventDefault();
-  form = new FormData(e.target);
-
-  fetch("api/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": form.get("csrfmiddlewaretoken"),
-    },
-    body: JSON.stringify({
-      dict_id: dict_id,
-    }),
-  })
-    .then((response) => {
-      if (response.status == 201) {
-        // window.location.href = "http://127.0.0.1:8000/profile";
-        alert("123");
-      } else {
-        alert("ошибка");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}

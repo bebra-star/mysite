@@ -1,0 +1,34 @@
+{% extends "index.html" %} {% load static %}
+
+<!-- определение блока title -->
+{% block title %}Тест {{ dict.name }}{% endblock %}
+
+<!-- определение блока content -->
+{% block content %}
+<script src="{% static 'js/test.js' %}"></script>
+
+<h1>{{ dict.name }}</h1>
+<p class="showing-word__text"></p>
+<div class="word-test">
+    <form onsubmit="answer(event);">
+        {% csrf_token %}
+        <input
+            class="translation__input"
+            name="answer"
+            placeholder="Введите перевод"
+        />
+        <button class="send-answer__button">Ответить</button>
+    </form>
+    <button class="skip__button" onclick="skipWordClicked();">
+        Пропустить
+    </button>
+    <button class="i-already-know__button" onclick="iKnowClicked();">
+        Я уже знаю это слово
+    </button>
+</div>
+
+<script>
+    setGlobalDictId("{{ dict.id }}");
+    getTestWord();
+</script>
+{% endblock %}

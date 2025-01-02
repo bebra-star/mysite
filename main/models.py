@@ -48,7 +48,7 @@ class TestSession(models.Model):
     dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     current_word_index = models.IntegerField()
-    showing_language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    is_showing_language_first = models.BooleanField()
 
 
 class TestSessionWordPair(models.Model):
