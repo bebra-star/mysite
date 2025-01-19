@@ -30,7 +30,10 @@ def render_test(request, dict_id):
     if not test_session:
         return render_dictionary(request, dict_id)
 
-    context = {"dict": dict}
+    context = {
+        "dict": dict,
+        "words_count": WordPair.objects.filter(dictionary_id=dict_id).count(),
+    }
     return render(request, "test.html", context=context)
 
 

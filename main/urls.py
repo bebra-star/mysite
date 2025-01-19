@@ -38,5 +38,9 @@ urlpatterns += [
         "api/dictionary/<int:dict_id>/test/skip-word",
         auth_mw(dict_mw(test_mw(handle_skip_test_word))),
     ),
+    path(
+        "api/dictionary/<int:dict_id>/test/i-know-word",
+        auth_mw(dict_mw(test_mw(handle_i_know_test_word))),
+    ),
     path("api/dictionary/<int:dict_id>", auth_mw(dict_mw(handle_get_dictionary))),
 ]

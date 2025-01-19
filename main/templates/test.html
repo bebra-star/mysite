@@ -8,23 +8,54 @@
 <script src="{% static 'js/test.js' %}"></script>
 
 <h1>{{ dict.name }}</h1>
-<p class="showing-word__text"></p>
-<div class="word-test">
-    <form onsubmit="answerSubmit(event)">
-        {% csrf_token %}
-        <input
-            class="translation__input"
-            name="answer"
-            placeholder="Введите перевод"
-        />
-        <button class="send-answer__button">Ответить</button>
-    </form>
-    <button class="skip__button" onclick="skipWordClicked();">
-        Пропустить
-    </button>
-    <button class="i-already-know__button" onclick="iKnowClicked();">
-        Я уже знаю это слово
-    </button>
+<div class="test-page">
+    <div class="words-counter">
+        <p>
+            <span class="words-counter__number-1"></span>
+            /
+            <span class="words-counter__number-2">{{ words_count }}</span>
+        </p>
+    </div>
+    <p class="showing-word__text"></p>
+    <div class="word-test">
+        <form onsubmit="answerSubmit(event)">
+            {% csrf_token %}
+            <input
+                class="translation__input"
+                name="answer"
+                placeholder="Введите перевод"
+            />
+            <button class="send-answer__button">Ответить</button>
+        </form>
+        <button class="skip__button" onclick="skipWordClicked();">
+            Пропустить
+        </button>
+        <button class="i-already-know__button" onclick="iKnowClicked();">
+            Я уже знаю это слово
+        </button>
+    </div>
+    <div class="word-result__container" style="display: none">
+        <div
+            class="word-result word-result__wrong-answer"
+            style="display: none"
+        >
+            <p class="wrong-answer__text"></p>
+        </div>
+        <div class="word-result word-result__correct-answer">
+            <p class="correct-answer__text">bebra</p>
+        </div>
+        <button class="word-result__continue" onclick="continueResult();">
+            Продолжить
+        </button>
+    </div>
+</div>
+<div class="test-result-page" style="display: none">
+    <p>Тест пройден!</p>
+    <div class="results">
+        <p>Знаю: <span class="results__learned-words"></span></p>
+        <p>Ещё не изучено: <span class="results__not-learned-words"></span></p>
+        <p>Пропущено: <span class="results__skipped-words"></span></p>
+    </div>
 </div>
 
 <script>

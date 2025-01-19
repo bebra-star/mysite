@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
-  /* border: 2px solid blue; */
+  font-size: 1.5rem;
   font-family: "Shantell Sans", cursive;
 }
 
@@ -315,8 +315,6 @@ label {
 .dialog {
   width: calc(100% - 40px);
   max-width: 400px;
-  border: none;
-  border-radius: 6px;
   inset: 0;
   position: absolute;
   top: 50%;
@@ -330,5 +328,25 @@ label {
 }
 
 .showing-word__text{
-  font-size: 3rem;
+  font-size: 3.5rem;
+
+}
+
+.word-result{
+  border-radius: 10px;
+  border: 2px solid; 
+  margin: 10px;
+  width: fit-content;
+  padding-right: 20px;
+}
+
+.word-result__wrong-answer{
+  border-color: #ff0000;
+  background-color: #ff7a7a;
+}
+
+.word-result__correct-answer{
+  border-color: #00ff73;
+  background-color: #b4ffca;
+
 }

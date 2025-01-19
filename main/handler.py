@@ -10,6 +10,7 @@ from main.helper import (
     get_next_word,
     apply_language_to_word_pair,
     get_showing_word,
+    get_test_result,
 )
 from main.models import (
     Dictionary,
@@ -60,13 +61,16 @@ def handle_start_test(request):
     return JsonResponse({"error": "wrong method"}, status=405)
 
 
-def handle_get_test_word(request, test_session):
+def handle_get_test_word(request, test_session: TestSession):
     if request.method == "GET":
         return JsonResponse(
             {
-                "data": get_showing_word(
-                    test_session, get_current_word_pair(test_session)
-                )
+                "data": {
+                    "showing_word": get_showing_word(
+                        test_session, get_current_word_pair(test_session)
+                    ),
+                    "current_word_index": test_session.current_word_index,
+                }
             },
             status=200,
         )
@@ -80,9 +84,10 @@ def handle_answer_test_word(request, test_session: TestSession):
             test_session_id=test_session.id
         )[test_session.current_word_index]
 
-        if data.get("answer") == apply_language_to_word_pair(
+        correct_answer = apply_language_to_word_pair(
             test_session, current_word_pair
-        ).get("translation"):
+        ).get("translation")
+        if data.get("answer") == correct_answer:
             success = True
             current_word_pair.status = TestSessionWordPairStatus.LEARNED
         else:
@@ -90,15 +95,26 @@ def handle_answer_test_word(request, test_session: TestSession):
             current_word_pair.status = TestSessionWordPairStatus.NOT_LEARNED
         current_word_pair.save()
 
+        next_word = get_next_word(test_session)
+        if next_word:
+            return JsonResponse(
+                {
+                    "data": {
+                        "success": success,
+                        "correct_answer": correct_answer,
+                        "next_word": get_showing_word(test_session, next_word),
+                    }
+                },
+                status=200,
+            )
+
+        data = get_test_result(test_session)
+        data["success"] = success
+        data["correct_answer"] = correct_answer
+
+        # todo: refactor
         return JsonResponse(
-            {
-                "data": {
-                    "success": success,
-                    "next_word": get_showing_word(
-                        test_session, get_next_word(test_session)
-                    ),
-                }
-            },
+            {"data": data},
             status=200,
         )
 
@@ -109,14 +125,66 @@ def handle_skip_test_word(request, test_session: TestSession):
         current_word_pair.status = TestSessionWordPairStatus.SKIPPED
         current_word_pair.save()
 
+        correct_answer = apply_language_to_word_pair(
+            test_session, current_word_pair
+        ).get("translation")
+
+        next_word = get_next_word(test_session)
+        if next_word:
+
+            return JsonResponse(
+                {
+                    "data": {
+                        "success": True,
+                        "correct_answer": correct_answer,
+                        "next_word": get_showing_word(test_session, next_word),
+                    }
+                },
+                status=200,
+            )
+
+        data = get_test_result(test_session)
+        data["success"] = True
+        data["correct_answer"] = correct_answer
+
+        # todo: refactor
         return JsonResponse(
-            {
-                "data": {
-                    "next_word": get_showing_word(
-                        test_session, get_next_word(test_session)
-                    ),
-                }
-            },
+            {"data": data},
+            status=200,
+        )
+
+
+def handle_i_know_test_word(request, test_session: TestSession):
+    if request.method == "GET":
+        current_word_pair = get_current_word_pair(test_session)
+        current_word_pair.status = TestSessionWordPairStatus.LEARNED
+        current_word_pair.save()
+
+        correct_answer = apply_language_to_word_pair(
+            test_session, current_word_pair
+        ).get("translation")
+
+        next_word = get_next_word(test_session)
+        if next_word:
+
+            return JsonResponse(
+                {
+                    "data": {
+                        "success": True,
+                        "correct_answer": correct_answer,
+                        "next_word": get_showing_word(test_session, next_word),
+                    }
+                },
+                status=200,
+            )
+
+        data = get_test_result(test_session)
+        data["success"] = True
+        data["correct_answer"] = correct_answer
+
+        # todo: refactor
+        return JsonResponse(
+            {"data": data},
             status=200,
         )
 
