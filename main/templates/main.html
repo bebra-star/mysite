@@ -1,24 +1,24 @@
 <!-- наследуемся от базового шаблона -->
-{% extends "index.html" %}
-{% load static %}
+{% extends "index.html" %} {% load static %}
 
 <!-- определение блока title -->
 {% block title %}Главная{% endblock %}
 
 <!-- определение блока content -->
 {% block content %}
-<div class="dedkov">
-  <ul class="dicts">
-    <!-- цикл по массиву dicts из контекста -->
-    {% for dict in dicts %}
-    <li class="dict-main">
-      <p>
-        <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
-      </p>
-      <a href="dict/{{ dict.id }}"> <img src="../static/assets/{{ dict.id }}.jpg" /> </a>
-    </li>
-    {% endfor %}
-  </ul>
-  <img src="{% static 'assets/dedkov.jpg' %}" onclick="event.target.remove()" alt="My image" />
+<div>
+    <ul class="dicts">
+        <!-- цикл по массиву dicts из контекста -->
+        {% for dict in dicts %}
+        <li class="dict-main">
+            <p>
+                <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
+            </p>
+            <a href="dict/{{ dict.id }}">
+                <img src="../static/assets/{{ dict.id }}.png" width="172px" />
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

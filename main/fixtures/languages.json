@@ -11,7 +11,7 @@
         "model": "main.language",
         "pk": 2,
         "fields": {
-            "name": "Русский",
+            "name": "Русский(russian)",
             "flag": "ru"
         }
     },
@@ -19,8 +19,32 @@
         "model": "main.language",
         "pk": 3,
         "fields": {
-            "name": "中文",
+            "name": "中文(chinese)",
             "flag": "ch"
+        }
+    },
+    {
+        "model": "main.language",
+        "pk": 4,
+        "fields": {
+            "name": "Français(frеnch)",
+            "flag": "fr"
+        }
+    },
+    {
+        "model": "main.language",
+        "pk": 5,
+        "fields": {
+            "name": "Italiano(italian)",
+            "flag": "it"
+        }
+    },
+    {
+        "model": "main.language",
+        "pk": 6,
+        "fields": {
+            "name": "Deutsch(German)",
+            "flag": "ge"
         }
     }
 ]

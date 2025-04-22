@@ -4,7 +4,7 @@
 {% block title %}Тест {{ dict.name }}{% endblock %}
 
 <!-- определение блока content -->
-{% block content %}
+{% block content %} {% load static %}
 <script src="{% static 'js/test.js' %}"></script>
 
 <h1>{{ dict.name }}</h1>
@@ -53,7 +53,7 @@
     <p>Тест пройден!</p>
     <div class="results">
         <p>Знаю: <span class="results__learned-words"></span></p>
-        <p>Ещё не изучено: <span class="results__not-learned-words"></span></p>
+        <p>Вы ошиблись: <span class="results__not-learned-words"></span></p>
         <p>Пропущено: <span class="results__skipped-words"></span></p>
     </div>
 </div>

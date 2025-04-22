@@ -1,10 +1,10 @@
-{% extends "index.html" %}
-{% load static %}
+{% extends "index.html" %} {% load static %}
 
 <!-- определение блока title -->
 {% block title %}Главная{% endblock %}
 
 <!-- определение блока content -->
 {% block content %}
-<h1>{{ requested_user.username }} </h1>
+<img src="../static/assets/{{ requested_user.id }}.jpeg" width="172px" />
+<h1>{{ requested_user.username }}</h1>
 {% endblock %}

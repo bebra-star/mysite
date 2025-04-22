@@ -10,13 +10,13 @@
     <input type="text" name="password" required placeholder="Пароль" />
     <label class="select" for="slct">
         <select name="lang1">
-            <option value="" disabled="disabled" selected="selected">Выберите язык</option>
+            <option value="" disabled="disabled" selected="selected">Язык носителя</option>
             {% for lang in langs %}
             <option value="{{ lang.id }}">{{ lang.name }}</option>
             {% endfor %}
         </select id="slct" required="required">
         <select name="lang2">
-            <option value="" disabled="disabled" selected="selected">Выберите язык</option>
+            <option value="" disabled="disabled" selected="selected">Изучаемый язык</option>
             {% for lang in langs %}
             <option value="{{ lang.id }}">{{ lang.name }}</option>
             {% endfor %}

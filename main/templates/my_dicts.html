@@ -1,29 +1,24 @@
-{% extends "index.html" %}
-{% load static %}
-
-{% block title %}Моё{% endblock %}
-
-{% block content %}
-{% if user.is_authenticated %}
-{% if dicts %}
-<ul class="dicts dict-main">
-  <!-- цикл по массиву dicts из контекста -->
-  {% for dict in dicts %}
-  <li>
-    <p>
-      <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
-    </p>
-    <a href="dict/{{ dict.id }}"> <img src="../static/assets/{{ dict.id }}.jpg" /> </a>
-  </li>
-  {% endfor %}
+{% extends "index.html" %} {% load static %} {% block title %}Моё{% endblock %}
+{% block content %} {% if user.is_authenticated %} {% if dicts %}
+<ul class="dicts">
+    <!-- цикл по массиву dicts из контекста -->
+    {% for dict in dicts %}
+    <li class="dict-main">
+        <p>
+            <a href="dict/{{ dict.id }}">{{ dict.name }}</a>
+        </p>
+        <a href="dict/{{ dict.id }}">
+            <img src="../static/assets/{{ dict.id }}.png" width="172px" />
+        </a>
+    </li>
+    {% endfor %}
 </ul>
 {% else %}
 <p>У вас пока нет словарей.</p>
 {% endif %}
 <form action="/create-dict">
-  <button class="main-button">Создать словарь</button>
+    <button class="main-button">Создать словарь</button>
 </form>
 {% else %}
 <p>Не авторизован.</p>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

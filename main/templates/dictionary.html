@@ -1,5 +1,4 @@
-{% extends "index.html" %}
-{% load static %}
+{% extends "index.html" %} {% load static %}
 
 <!-- определение блока title -->
 {% block title %}Словарь {{ dict.name }}{% endblock %}
@@ -11,16 +10,19 @@
     <form onsubmit="startTest(event, '{{ dict.id }}')">
         {% csrf_token %}
         <div class="language__switch">
-            <span>Изменить язык</span>
-            <input type="checkbox" name="is_showing_language_first">
+            <span>Поменять язык</span>
+            <input type="checkbox" name="is_showing_language_first" />
         </div>
         <button>Начать прохождение</button>
     </form>
 </dialog>
 <div class="my-dicts">
     <h1>{{ dict.name }}</h1>
-    <p>Автор:</p>
-    <a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
+    <p>
+        Автор:
+        <a href="/user/{{ dict.creator.id }}">{{ dict.creator.username }}</a>
+    </p>
+
     <!-- <form onsubmit="start_test(event, '{{ dict.id }}')"> -->
     {% if test_session_exists %}
     <button onclick="window.location.href+=`/test`">Продолжить</button>
@@ -28,25 +30,23 @@
     {% else %}
     <button onclick="openPopup();">Начать тест</button>
     {% endif %}
-    <div class="language__switch">
+    <!-- <div class="language__switch">
         <span>Изменить язык</span>
-        <input type="checkbox" onclick="handleLanguageSwitch()">
-    </div>
-    <div class="card">
+        <input type="checkbox" onclick="handleLanguageSwitch()" />
+    </div> -->
+    <!-- <div class="card">
         <div class="current-card__text" onclick="flipCard()"></div>
         <button class="button-dict" onclick="handleNextWord()">Вперед</button>
         <button class="button-dict" onclick="handlePreviousWord()">Назад</button>
-    </div>
+    </div> -->
     <ul>
         <!-- цикл по массиву dicts из контекста -->
         {% for word in words %}
-        <li>
-            {{ word.word1 }} - {{word.word2}}
-        </li>
+        <li>{{ word.word1 }} - {{word.word2}}</li>
         {% endfor %}
     </ul>
 </div>
 <script>
-    fetchDictionary()
+    fetchDictionary();
 </script>
 {% endblock %}
