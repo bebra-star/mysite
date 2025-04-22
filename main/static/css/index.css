@@ -46,6 +46,8 @@ html {
   top: 120px;
   display: block;
   float: left;
+  margin: 5px;
+  margin-left: 10px;
   background: rgb(255, 243, 241);
 }
 
